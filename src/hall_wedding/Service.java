@@ -20,6 +20,8 @@ public class Service implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private static final String NAME_REGEX = "^[\\p{L} ]+$";
+
     private String name;
     private double price;
     private String type;
@@ -30,18 +32,18 @@ public class Service implements Serializable {
     public Service() {}
 
     public Service(String name, double price) {
-        this.name = name;
-        this.price = price;
+        setName(name);
+        setPrice(price);
     }
 
     public Service(String name, double price, String type) {
-        this.name = name;
-        this.price = price;
-        this.type = type;
+        setName(name);
+        setPrice(price);
+        setType(type);
     }
 
     public void updatePrice(double newPrice) {
-        this.price = newPrice;
+        setPrice(newPrice);
         System.out.println("Service price updated to " + newPrice);
     }
 
@@ -54,7 +56,17 @@ public class Service implements Serializable {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (name == null) {
+            throw new IllegalArgumentException("Service name is required");
+        }
+        String trimmed = name.trim();
+        if (trimmed.length() < 3) {
+            throw new IllegalArgumentException("Service name must be at least 3 characters");
+        }
+        if (!trimmed.matches(NAME_REGEX) || trimmed.replace(" ", "").isEmpty()) {
+            throw new IllegalArgumentException("Service name must contain letters only");
+        }
+        this.name = trimmed;
     }
 
     public double getPrice() {
@@ -62,6 +74,9 @@ public class Service implements Serializable {
     }
 
     public void setPrice(double price) {
+        if (price <= 0) {
+            throw new IllegalArgumentException("Price must be greater than 0");
+        }
         this.price = price;
     }
 
@@ -70,7 +85,10 @@ public class Service implements Serializable {
     }
 
     public void setType(String type) {
-        this.type = type;
+        if (type == null || type.trim().isEmpty()) {
+            throw new IllegalArgumentException("Service type is required");
+        }
+        this.type = type.trim();
     }
 
     public Admin getAddedBy() {

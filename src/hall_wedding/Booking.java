@@ -43,9 +43,9 @@ public class Booking implements Serializable {
 
     public Booking(Customer customer, Hall hall,
                    LocalDate eventDate, int durationHours) {
-        this.hall = hall;
-        this.eventDate = eventDate;
-        this.durationHours = durationHours;
+        setHall(hall);
+        setEventDate(eventDate);
+        setDurationHours(durationHours);
         this.status = "PENDING";
         this.isPaid = false;
         setCustomer(customer);
@@ -83,17 +83,24 @@ public class Booking implements Serializable {
     }
 
     public void addService(Service service) {
+        if (service == null) {
+            throw new IllegalArgumentException("Service is required");
+        }
         services.add(service);
     }
 
     public boolean processPayment(String method) {
-        if (!"CONFIRMED".equals(status)) {
-            System.out.println("Booking not confirmed");
+        if ("CANCELED".equals(status)) {
+            System.out.println("Canceled booking cannot be paid");
             return false;
+        }
+        if (method == null || method.trim().isEmpty()) {
+            throw new IllegalArgumentException("Payment method is required");
         }
 
         calculateTotalPrice();
-        this.paymentMethod = method;
+        this.paymentMethod = method.trim();
+        this.status = "CONFIRMED";
         this.isPaid = true;
         this.paymentDate = LocalDate.now();
 
@@ -112,9 +119,22 @@ public class Booking implements Serializable {
 
     public Long getId() { return id; }
     public LocalDate getEventDate() { return eventDate; }
-    public void setEventDate(LocalDate eventDate) { this.eventDate = eventDate; }
+    public void setEventDate(LocalDate eventDate) {
+        if (eventDate == null) {
+            throw new IllegalArgumentException("Event date is required");
+        }
+        if (eventDate.isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("Event date cannot be in the past");
+        }
+        this.eventDate = eventDate;
+    }
     public int getDurationHours() { return durationHours; }
-    public void setDurationHours(int durationHours) { this.durationHours = durationHours; }
+    public void setDurationHours(int durationHours) {
+        if (durationHours < 1 || durationHours > 24) {
+            throw new IllegalArgumentException("Duration must be between 1 and 24 hours");
+        }
+        this.durationHours = durationHours;
+    }
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
     public Customer getCustomer() { return customer; }
@@ -129,11 +149,22 @@ public class Booking implements Serializable {
     }
 
     public Hall getHall() { return hall; }
-    public void setHall(Hall hall) { this.hall = hall; }
+    public void setHall(Hall hall) {
+        if (hall == null) {
+            throw new IllegalArgumentException("Hall is required");
+        }
+        this.hall = hall;
+    }
     public List<Service> getServices() { return services; }
     public Admin getCreatedBy() { return createdBy; }
     public void setCreatedBy(Admin createdBy) { this.createdBy = createdBy; }
     public String getPaymentMethod() { return paymentMethod; }
+    public void setPaymentMethod(String paymentMethod) {
+        if (paymentMethod == null || paymentMethod.trim().isEmpty()) {
+            throw new IllegalArgumentException("Payment method is required");
+        }
+        this.paymentMethod = paymentMethod.trim();
+    }
     public boolean isPaid() { return isPaid; }
     public LocalDate getPaymentDate() { return paymentDate; }
 

@@ -9,8 +9,9 @@ import java.util.List;
 public class Customer extends Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private static final String DIGITS_REGEX = "^\\d+$";
 
-    private int phone;
+    private String phone;
     private String ssn;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -19,10 +20,10 @@ public class Customer extends Person implements Serializable {
     public Customer() {}
 
     public Customer(String name, String email, String password,
-                    int phone, String ssn) {
+                    String phone, String ssn) {
         super(name, email, password);
-        this.phone = phone;
-        this.ssn = ssn;
+        setPhone(phone);
+        setSsn(ssn);
     }
 
     // Business Logic
@@ -31,10 +32,10 @@ public class Customer extends Person implements Serializable {
         System.out.println("Customer registered: " + name + " | SSN: " + ssn);
     }
 
-    public void updateProfile(String name, int phone, String email) {
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
+    public void updateProfile(String name, String phone, String email) {
+        setName(name);
+        setPhone(phone);
+        setEmail(email);
         System.out.println("Profile updated for: " + this.name);
     }
 
@@ -71,13 +72,27 @@ public class Customer extends Person implements Serializable {
 
     // Getters & Setters
 
-    public int getPhone() { return phone; }
+    public String getPhone() { return phone; }
 
-    public void setPhone(int phone) { this.phone = phone; }
+    public void setPhone(String phone) {
+        if (phone == null) {
+            throw new IllegalArgumentException("Phone is required");
+        }
+        String phoneText = phone.trim();
+        if (!phoneText.matches("^(010|011|012|015)\\d{8}$")) {
+            throw new IllegalArgumentException("Phone must be 11 digits and start with 010, 011, 012, or 015");
+        }
+        this.phone = phoneText;
+    }
 
     public String getSsn() { return ssn; }
 
-    public void setSsn(String ssn) { this.ssn = ssn; }
+    public void setSsn(String ssn) {
+        if (ssn == null || !ssn.matches(DIGITS_REGEX) || ssn.length() != 14) {
+            throw new IllegalArgumentException("SSN must be exactly 14 digits");
+        }
+        this.ssn = ssn;
+    }
 
     public List<Booking> getBookings() { return bookings; }
 

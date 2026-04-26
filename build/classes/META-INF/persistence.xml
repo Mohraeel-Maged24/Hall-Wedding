@@ -14,7 +14,7 @@
       <property name="jakarta.persistence.jdbc.user" value="root"/>
       <property name="jakarta.persistence.jdbc.password" value="3306"/>
       <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
-      <property name="eclipselink.ddl-generation" value="none"/>
+      <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
       <property name="eclipselink.ddl-generation.output-mode" value="database"/>
       <property name="eclipselink.logging.level" value="FINE"/>
     </properties>

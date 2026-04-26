@@ -19,18 +19,18 @@ public final class DBSeeder {
 
             em.getTransaction().begin();
 
-            Admin admin1 = new Admin("System Admin", "admin@hall.com", "1234", 12000, "Morning");
-            Admin admin2 = new Admin("Night Admin", "admin2@hall.com", "1234", 11000, "Night");
+            Admin admin1 = new Admin("System Admin", "admin@hall.com", "123456", 12000, "Morning");
+            Admin admin2 = new Admin("Night Admin", "admin2@hall.com", "123456", 11000, "Night");
 
-            Customer c1 = new Customer("Ahmed Ali", "ahmed@mail.com", "1234", 10101010, "30001010101010");
-            Customer c2 = new Customer("Sara Hassan", "sara@mail.com", "1234", 20202020, "30002020202020");
-            Customer c3 = new Customer("Mona Samy", "mona@mail.com", "1234", 30303030, "30003030303030");
+            Customer c1 = new Customer("Ahmed Ali", "ahmed@mail.com", "1234", "01010101010", "30001010101010");
+            Customer c2 = new Customer("Sara Hassan", "sara@mail.com", "1234", "01120202020", "30002020202020");
+            Customer c3 = new Customer("Mona Samy", "mona@mail.com", "1234", "01230303030", "30003030303030");
 
-            Hall h1 = new Hall("Royal Hall", "Cairo", 250, 4500);
+            Hall h1 = new Hall("Royal Hall", "Cairo", 250, 5000);
             h1.setManagedBy(admin1);
             Hall h2 = new Hall("Golden Palace", "Giza", 350, 6200);
             h2.setManagedBy(admin1);
-            Hall h3 = new Hall("Nile View", "Alexandria", 180, 3800);
+            Hall h3 = new Hall("Nile View", "Alexandria", 180, 5500);
             h3.setManagedBy(admin2);
 
             Service s1 = new Service("Premium Catering", 12000, "Catering");
@@ -42,6 +42,7 @@ public final class DBSeeder {
 
             Booking b1 = new Booking(c1, h1, LocalDate.now().plusDays(15), 5);
             b1.setCreatedBy(admin1);
+            b1.setPaymentMethod("Cash");
             b1.addService(s1);
             b1.addService(s3);
             b1.confirmBooking();
@@ -49,6 +50,7 @@ public final class DBSeeder {
 
             Booking b2 = new Booking(c2, h2, LocalDate.now().plusDays(30), 6);
             b2.setCreatedBy(admin1);
+            b2.setPaymentMethod("Cash");
             b2.addService(s2);
             b2.confirmBooking();
 

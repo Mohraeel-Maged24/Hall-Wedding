@@ -63,10 +63,12 @@ public class Theme {
 
     public static String goldButtonStyle() {
         return "-fx-background-color:" + GOLD + ";" +
-               "-fx-text-fill:#FFFDF8;" +
+               "-fx-text-fill:#FFFFFF;" +
                "-fx-font-weight:bold;" +
                "-fx-font-size:14px;" +
                "-fx-padding:10 30;" +
+               "-fx-border-color: rgba(47,36,27,0.35);" +
+               "-fx-border-width:1;" +
                "-fx-background-radius:20;" +
                "-fx-effect: dropshadow(gaussian, rgba(86,57,22,0.18), 12, 0.2, 0, 3);" +
                "-fx-cursor:hand;";
@@ -74,31 +76,38 @@ public class Theme {
 
     public static String roseButtonStyle() {
         return "-fx-background-color:" + ROSE + ";" +
-               "-fx-text-fill:" + WHITE + ";" +
+               "-fx-text-fill:#FFFFFF;" +
                "-fx-font-weight:bold;" +
-               "-fx-font-size:13px;" +
+               "-fx-font-size:14px;" +
                "-fx-padding:8 20;" +
+               "-fx-border-color: rgba(47,36,27,0.25);" +
+               "-fx-border-width:1;" +
                "-fx-background-radius:10;" +
                "-fx-cursor:hand;";
     }
 
     public static String dangerButtonStyle() {
         return "-fx-background-color:#8B2020;" +
-               "-fx-text-fill:" + WHITE + ";" +
+               "-fx-text-fill:#FFFFFF;" +
                "-fx-font-weight:bold;" +
-               "-fx-font-size:13px;" +
+               "-fx-font-size:14px;" +
                "-fx-padding:8 20;" +
+               "-fx-border-color: rgba(255,255,255,0.2);" +
+               "-fx-border-width:1;" +
                "-fx-background-radius:10;" +
                "-fx-cursor:hand;";
     }
 
     public static String navButtonStyle() {
-        return "-fx-background-color:transparent;" +
-               "-fx-text-fill:" + CREAM_DIM + ";" +
+         return "-fx-background-color: rgba(243,233,218,0.95);" +
+             "-fx-text-fill:" + CREAM + ";" +
                "-fx-font-size:14px;" +
+             "-fx-font-weight:bold;" +
                "-fx-font-family:'Georgia';" +
                "-fx-alignment:CENTER_LEFT;" +
                "-fx-padding:10 16;" +
+             "-fx-border-color: rgba(47,36,27,0.15);" +
+             "-fx-border-width:1;" +
                "-fx-background-radius:10;" +
                "-fx-cursor:hand;";
     }

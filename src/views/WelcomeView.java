@@ -9,25 +9,35 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import java.io.InputStream;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class WelcomeView {
 
     private static final String HERO_IMAGE_PATH = "/viewIcon/Gemini_Generated_Image_9t6f4o9t6f4o9t6f.png";
-    private static final Image HERO_IMAGE = loadHeroImage();
+    private static final String[] DYNAMIC_HERO_URLS = {
+        "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=80",
+        "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1600&q=80",
+        "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1600&q=80",
+        "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1600&q=80"
+    };
 
     public static Scene build() {
         StackPane root = new StackPane();
         root.setStyle(Theme.appBackgroundStyle());
         root.setPrefSize(980, 620);
 
-        // Hero image loaded once from local resources to avoid network delays.
-        ImageView hero = new ImageView(HERO_IMAGE);
+        ImageView hero = new ImageView(loadDynamicHeroImage());
         hero.setFitWidth(980);
         hero.setFitHeight(620);
         hero.setPreserveRatio(false);
 
         Rectangle overlay = new Rectangle(980, 620);
         overlay.setStyle("-fx-fill: linear-gradient(to bottom, rgba(26,18,15,0.3), rgba(26,18,15,0.74));");
+
+        hero.fitWidthProperty().bind(root.widthProperty());
+        hero.fitHeightProperty().bind(root.heightProperty());
+        overlay.widthProperty().bind(root.widthProperty());
+        overlay.heightProperty().bind(root.heightProperty());
 
         // Content
         VBox content = new VBox(14);
@@ -64,7 +74,14 @@ public class WelcomeView {
         return l;
     }
 
-    private static Image loadHeroImage() {
+    private static Image loadDynamicHeroImage() {
+        String url = DYNAMIC_HERO_URLS[ThreadLocalRandom.current().nextInt(DYNAMIC_HERO_URLS.length)];
+        try {
+            return new Image(url, true);
+        } catch (Exception ignored) {
+            // Fall back to bundled image if the remote image cannot be loaded.
+        }
+
         InputStream in = WelcomeView.class.getResourceAsStream(HERO_IMAGE_PATH);
         if (in == null) {
             return new Image("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=80", true);

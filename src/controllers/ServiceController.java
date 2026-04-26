@@ -6,6 +6,8 @@ import java.util.List;
 
 public class ServiceController {
 
+    private static final String NAME_REGEX = "^[\\p{L} ]+$";
+
     public static List<Service> getAll() {
         EntityManager em = JPAUtil.getEM();
         try {
@@ -21,6 +23,7 @@ public class ServiceController {
     }
 
     public static void add(String name, double price, String type) {
+        validateServiceData(name, price, type);
         EntityManager em = JPAUtil.getEM();
         try {
             Service s = new Service(name, price, type);
@@ -33,6 +36,8 @@ public class ServiceController {
     }
 
     public static void update(Long id, String name, double price, String type) {
+        validateId(id);
+        validateServiceData(name, price, type);
         EntityManager em = JPAUtil.getEM();
         try {
             em.getTransaction().begin();
@@ -47,6 +52,7 @@ public class ServiceController {
     }
 
     public static void delete(Long id) {
+        validateId(id);
         EntityManager em = JPAUtil.getEM();
         try {
             em.getTransaction().begin();
@@ -54,5 +60,30 @@ public class ServiceController {
             if (s != null) em.remove(s);
             em.getTransaction().commit();
         } finally { em.close(); }
+    }
+
+    private static void validateServiceData(String name, double price, String type) {
+        if (name == null) {
+            throw new IllegalArgumentException("Service name is required");
+        }
+        String trimmedName = name.trim();
+        if (trimmedName.length() < 3) {
+            throw new IllegalArgumentException("Service name must be at least 3 characters");
+        }
+        if (!trimmedName.matches(NAME_REGEX) || trimmedName.replace(" ", "").isEmpty()) {
+            throw new IllegalArgumentException("Service name must contain letters only");
+        }
+        if (type == null || type.trim().isEmpty()) {
+            throw new IllegalArgumentException("Service type is required");
+        }
+        if (price <= 0) {
+            throw new IllegalArgumentException("Price must be greater than 0");
+        }
+    }
+
+    private static void validateId(Long id) {
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException("Invalid id");
+        }
     }
 }
