@@ -43,12 +43,12 @@ The project was developed as a team project for an advanced database application
 
 This project was developed collaboratively by a team. Add the final team member names below before submitting the project:
 
-| Member | Contribution |
-| --- | --- |
-| Team member 1 | Application design and implementation |
-| Team member 2 | Database and JPA integration |
-| Team member 3 | JavaFX views and user experience |
-| Team member 4 | Testing and documentation |
+| Member | 
+| --- | 
+| Basmala Ayman Omer | 
+| Makary Nour Zaki | 
+| Mohraeel Maged Shawky | 
+| Youssef Medhat | 
 
 ## Technology Stack
 
@@ -59,13 +59,11 @@ This project was developed collaboratively by a team. Add the final team member 
 | Jakarta Persistence | 3.1, persistence API |
 | EclipseLink | 4.0.2, JPA provider |
 | MySQL | Relational database |
-| Maven | Dependency management and packaging |
 | ControlsFX | 11.2.1, additional JavaFX controls |
 
 ## Requirements
 
 - JDK 21 or newer
-- Maven 3.8 or newer
 - MySQL Server
 - A database named `hall_wedding`
 
@@ -86,7 +84,6 @@ The default connection points to:
 ```text
 Host: localhost:3306
 Database: hall_wedding
-Username: root
 ```
 
 The application is configured to create or extend the required tables through JPA when it starts. Do not commit production database credentials to a public repository.
