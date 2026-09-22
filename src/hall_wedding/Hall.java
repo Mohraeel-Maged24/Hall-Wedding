@@ -10,7 +10,16 @@ public class Hall implements Serializable {
     private static final String NAME_REGEX = "^[\\p{L} ]+$";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @TableGenerator(
+        name = "hall_id_gen",
+        table = "id_generator",
+        pkColumnName = "entity_name",
+        valueColumnName = "next_id",
+        pkColumnValue = "hall",
+        initialValue = 1,
+        allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "hall_id_gen")
     private Long id;
 
     private String name;

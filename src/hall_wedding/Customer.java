@@ -1,20 +1,21 @@
 package hall_wedding;
 
 import jakarta.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Customer extends Person implements Serializable {
+public class Customer extends Person {
 
     private static final long serialVersionUID = 1L;
     private static final String DIGITS_REGEX = "^\\d+$";
 
     private String phone;
+
+    @Column(unique = true)
     private String ssn;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Booking> bookings = new ArrayList<>();
 
     public Customer() {}

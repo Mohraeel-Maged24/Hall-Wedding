@@ -9,17 +9,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import java.io.InputStream;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class WelcomeView {
 
     private static final String HERO_IMAGE_PATH = "/viewIcon/Gemini_Generated_Image_9t6f4o9t6f4o9t6f.png";
-    private static final String[] DYNAMIC_HERO_URLS = {
-        "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=80",
-        "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1600&q=80",
-        "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1600&q=80",
-        "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1600&q=80"
-    };
+    
 
     public static Scene build() {
         StackPane root = new StackPane();
@@ -75,16 +69,9 @@ public class WelcomeView {
     }
 
     private static Image loadDynamicHeroImage() {
-        String url = DYNAMIC_HERO_URLS[ThreadLocalRandom.current().nextInt(DYNAMIC_HERO_URLS.length)];
-        try {
-            return new Image(url, true);
-        } catch (Exception ignored) {
-            // Fall back to bundled image if the remote image cannot be loaded.
-        }
-
         InputStream in = WelcomeView.class.getResourceAsStream(HERO_IMAGE_PATH);
         if (in == null) {
-            return new Image("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=80", true);
+            throw new RuntimeException("Hero image not found: " + HERO_IMAGE_PATH);
         }
         return new Image(in);
     }

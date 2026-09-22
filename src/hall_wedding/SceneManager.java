@@ -8,6 +8,7 @@ import views.CustomerBookingsView;
 import views.CustomerView;
 import views.HallView;
 import views.LoginView;
+
 import views.ServiceView;
 import views.WelcomeView;
 

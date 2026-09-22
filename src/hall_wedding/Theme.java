@@ -15,7 +15,7 @@ public class Theme {
     public static final String WHITE        = "#FFFFFF";
     public static final String ERROR        = "#E05555";
     public static final String SUCCESS      = "#6DBF82";
-    private static final String FLORAL_BG_PATH = "/viewIcon/photo_2026-04-21_00-01-45.jpg";
+    private static final String FLORAL_BG_PATH = "/viewIcon/Pink and White Watercolor Floral Wedding Invitation(1).png";
 
     // ─── Styles ──────────────────────────────────────────
     public static String appBackgroundStyle() {
@@ -33,21 +33,26 @@ public class Theme {
                "-fx-background-repeat:no-repeat;";
     }
 
+    public static String pastelGradientBackgroundStyle() {
+        return "-fx-background-color: linear-gradient(to bottom right, #EAE6FF 0%, #E8FFF5 52%, #F9F3FF 100%);";
+    }
+
     public static String frostedPanelStyle() {
-        return "-fx-background-color: rgba(255,253,248,0.84);" +
-               "-fx-background-radius:14;" +
-               "-fx-border-color: rgba(184,137,59,0.25);" +
-               "-fx-border-radius:14;" +
-               "-fx-border-width:1;";
+         return "-fx-background-color: rgba(255,255,255,0.38);" +
+             "-fx-background-radius:20;" +
+             "-fx-border-color: rgba(193,221,255,0.72);" +
+             "-fx-border-radius:20;" +
+             "-fx-border-width:1;" +
+             "-fx-effect: dropshadow(gaussian, rgba(121,178,255,0.18), 18, 0.18, 0, 6);";
     }
 
     public static String cardStyle() {
-        return "-fx-background-color: rgba(255,253,248,0.95);" +
-               "-fx-background-radius:18;" +
-               "-fx-border-color: rgba(184,137,59,0.38);" +
-               "-fx-border-radius:18;" +
+         return "-fx-background-color: rgba(255,255,255,0.82);" +
+             "-fx-background-radius:20;" +
+             "-fx-border-color: rgba(193,221,255,0.56);" +
+             "-fx-border-radius:20;" +
                "-fx-border-width:1.1;" +
-               "-fx-effect: dropshadow(gaussian, rgba(86,57,22,0.16), 20, 0.2, 0, 6);";
+             "-fx-effect: dropshadow(gaussian, rgba(117,142,185,0.16), 20, 0.2, 0, 6);";
     }
 
     public static String inputStyle() {

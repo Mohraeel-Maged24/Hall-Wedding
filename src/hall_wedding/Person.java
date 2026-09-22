@@ -10,7 +10,16 @@ public class Person implements Serializable {
     private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @TableGenerator(
+        name = "person_id_gen",
+        table = "id_generator",
+        pkColumnName = "entity_name",
+        valueColumnName = "next_id",
+        pkColumnValue = "person",
+        initialValue = 1,
+        allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "person_id_gen")
     protected Long id;
 
     protected String name;
@@ -68,5 +77,19 @@ public class Person implements Serializable {
             throw new IllegalArgumentException("Password must be at least 4 characters");
         }
         this.password = password.trim();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || id == null) return false;
+        if (!(o instanceof Person)) return false;
+        Person person = (Person) o;
+        return id.equals(person.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

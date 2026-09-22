@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.TableGenerator;
 import java.io.Serializable;
 
 @Entity
@@ -17,7 +18,16 @@ public class Service implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @TableGenerator(
+        name = "service_id_gen",
+        table = "id_generator",
+        pkColumnName = "entity_name",
+        valueColumnName = "next_id",
+        pkColumnValue = "service",
+        initialValue = 1,
+        allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "service_id_gen")
     private Long id;
 
     private static final String NAME_REGEX = "^[\\p{L} ]+$";

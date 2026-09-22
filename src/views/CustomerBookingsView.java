@@ -55,12 +55,25 @@ public class CustomerBookingsView {
 
         Label info = new Label();
         info.setStyle(Theme.subtitleStyle());
+        info.setMaxWidth(Double.MAX_VALUE);
 
         Button refreshBtn = new Button("Refresh");
         refreshBtn.setStyle(Theme.goldButtonStyle());
         refreshBtn.setOnAction(e -> reload(table, info));
 
-        VBox center = new VBox(14, info, refreshBtn, table);
+        VBox headerCard = new VBox(10);
+        headerCard.setPadding(new Insets(14));
+        headerCard.setStyle(Theme.cardStyle());
+
+        Label title = new Label("My Bookings");
+        title.setStyle(Theme.titleStyle(18));
+
+        HBox actionRow = new HBox(10, refreshBtn);
+        actionRow.setAlignment(Pos.CENTER_LEFT);
+
+        headerCard.getChildren().addAll(title, info, actionRow);
+
+        VBox center = new VBox(12, headerCard, table);
         center.setPadding(new Insets(20));
         VBox.setVgrow(table, Priority.ALWAYS);
         root.setCenter(center);
