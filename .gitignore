@@ -1,1 +1,4 @@
-/dist/
+build
+dist
+target
+controlsfx-11.2.1.jar
